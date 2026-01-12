@@ -198,15 +198,15 @@ async def predict_json(
 
         # Convert to JSON
         result = {
-            "positions": gaussians.positions.cpu().numpy().tolist(),
-            "scales": gaussians.scales.cpu().numpy().tolist(),
-            "rotations": gaussians.rotations.cpu().numpy().tolist(),
+            "mean_vectors": gaussians.mean_vectors.cpu().numpy().tolist(),
+            "singular_values": gaussians.singular_values.cpu().numpy().tolist(),
+            "quaternions": gaussians.quaternions.cpu().numpy().tolist(),
             "opacities": gaussians.opacities.cpu().numpy().tolist(),
             "colors": gaussians.colors.cpu().numpy().tolist(),
             "metadata": {
                 "focal_length": focal_length,
                 "image_size": image_size,
-                "num_gaussians": len(gaussians.positions),
+                "num_gaussians": len(gaussians.mean_vectors),
             }
         }
 
