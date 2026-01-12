@@ -32,8 +32,9 @@ image = (
         "numpy",
         "requests",
         "fastapi[standard]",
+        "python-multipart",
     )
-    .copy_local_dir("src/sharp", "/root/sharp")
+    .add_local_dir("src/sharp", "/root/sharp")
 )
 
 # Create a volume for caching the model checkpoint
