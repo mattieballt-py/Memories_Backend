@@ -66,6 +66,33 @@ sharp predict -i /path/to/input/images -o /path/to/output/gaussians --render
 sharp render -i /path/to/output/gaussians -o /path/to/output/renderings
 ```
 
+## Modal GPU Deployment
+
+You can deploy SHARP on Modal for serverless GPU inference. See [MODAL_SETUP.md](MODAL_SETUP.md) for detailed instructions.
+
+**Quick start:**
+
+```bash
+# Install Modal
+pip install modal
+
+# Set up Modal account
+modal setup
+
+# Deploy the API
+modal deploy modal_api.py
+
+# Use the example client
+python example_client.py --image /path/to/image.jpg --output output.ply
+```
+
+Benefits of Modal deployment:
+- Automatic GPU scaling (A100, H100, etc.)
+- Pay-per-use pricing (no idle costs)
+- Model checkpoint caching
+- REST API for easy integration
+- Concurrent request handling
+
 ## Evaluation
 
 Please refer to the paper for both quantitative and qualitative evaluations.

@@ -1,0 +1,6 @@
+# Requirements for Modal deployment
+modal>=0.63.0
+requests>=2.32.0
+
+# Optional: For running the example client
+# These are only needed on your local machine, not in Modal
