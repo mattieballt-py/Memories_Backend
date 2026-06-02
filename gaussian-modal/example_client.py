@@ -40,10 +40,7 @@ def call_web_api(
     """Call the web API endpoint."""
     import requests
 
-    if output_format == "ply":
-        endpoint = f"{api_url}/predict/ply"
-    else:
-        endpoint = f"{api_url}/predict"
+    endpoint = f"{api_url.rstrip('/')}/splat"
 
     print(f"Calling API: {endpoint}")
 
@@ -63,15 +60,21 @@ def call_web_api(
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    data = response.json()
+
     if output_format == "ply":
+        print(f"Downloading PLY from: {data['ply_url']}")
+        ply_response = requests.get(data["ply_url"], timeout=60)
+        ply_response.raise_for_status()
         print(f"Saving PLY to: {output_path}")
         with open(output_path, "wb") as f:
-            f.write(response.content)
+            f.write(ply_response.content)
     else:
-        import json
         print(f"Saving JSON to: {output_path}")
         with open(output_path, "w") as f:
-            json.dump(response.json(), f, indent=2)
+            import json
+
+            json.dump(data, f, indent=2)
 
     print("Done!")
 
@@ -151,7 +154,7 @@ def main():
         "--format",
         choices=["ply", "json"],
         default="ply",
-        help="Output format (only for web API)"
+        help="Output format (web API returns JSON metadata and a PLY URL)"
     )
 
     args = parser.parse_args()
